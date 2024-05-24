@@ -4,8 +4,9 @@ const AppError = require('../utils/AppError');
 
 // Create a new expense
 const createExpense = asyncHandler(async (req, res, next) => {
-  const { name, description, category, amount, currency, receipt_image, date } = req.body;
+  const { name, description, category, amount, currency, date } = req.body;
   const userId = req.user.id;
+  const receipt_image = req.file ? req.file.path : null;
 
   if (!name || !category || !amount || !currency || !date) {
     return next(new AppError('Please add all required fields', 400));
@@ -37,9 +38,14 @@ const getExpenseById = asyncHandler(async (req, res, next) => {
 
 // Update an expense by ID
 const updateExpense = asyncHandler(async (req, res, next) => {
-  const { name, description, category, amount, currency, receipt_image, date } = req.body;
+  const { name, description, category, amount, currency, date } = req.body;
   const { id } = req.params;
   const userId = req.user.id;
+  const receipt_image = req.file ? req.file.path : req.body.receipt_image;
+
+  if (!name || !category || !amount || !currency || !date) {
+    return next(new AppError('Please add all required fields', 400));
+  }
 
   const expense = await expenseService.updateExpense(id, userId, name, description, category, amount, currency, receipt_image, date);
   if (!expense) {

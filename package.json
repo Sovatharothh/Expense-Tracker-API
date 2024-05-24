@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "swagger-autogen": "node ./src/swagger.js"  },
+    "swagger-autogen": "node ./src/swagger.js"
+  },
   "keywords": [],
   "author": "Roth TT",
   "license": "ISC",

@@ -6,6 +6,11 @@ const expenseRoutes = require('./src/routes/expenseRoutes');
 const setupSwagger = require('./src/swagger');
 const errorHandler = require('./src/middleware/errorHandler');
 const AppError = require('./src/utils/AppError');
+const multer = require('multer');
+
+// Multer configuration for file uploads
+const upload = multer({ dest: 'uploads/' });
+
 
 dotenv.config();
 
