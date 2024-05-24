@@ -9,6 +9,18 @@ const options = {
       version: '1.0.0',
       description: 'API documentation for the Expense Tracker application',
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
+    },
+    security: [{
+      bearerAuth: []
+    }],    
     servers: [
       {
         url: 'http://localhost:3000',
