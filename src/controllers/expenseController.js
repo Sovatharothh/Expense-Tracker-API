@@ -8,8 +8,24 @@ const createExpense = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const receipt_image = req.file ? req.file.path : null;
 
-  if (!name || !category || !amount || !currency || !date) {
-    return next(new AppError('Please add all required fields', 400));
+  if (!name) {
+    return next(new AppError('Please add the name of the expense', 400));
+  }
+
+  if(!category){
+    return next(new AppError('Please add the category of the expense', 400));
+  }
+
+  if (amount === undefined || amount === null || isNaN(amount) || amount <= 0 || !Number.isInteger(Number(amount))) {
+    return next(new AppError('Please add a valid positive integer amount for the expense', 400));
+  }
+
+  if(!currency){
+    return next(new AppError('Please add currency of the expense', 400));
+  }
+
+  if(!date){
+    return next(new AppError('Please add the date of the expense', 400));
   }
 
   const expense = await expenseService.createExpense(userId, name, description, category, amount, currency, receipt_image, date);
