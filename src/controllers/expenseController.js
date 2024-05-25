@@ -16,10 +16,22 @@ const createExpense = asyncHandler(async (req, res, next) => {
     return next(new AppError('Please add the category of the expense', 400));
   }
 
-  if (amount === undefined || amount === null || isNaN(amount) || amount <= 0 || !Number.isInteger(Number(amount))) {
-    return next(new AppError('Please add a valid positive integer amount for the expense', 400));
+  if (amount === undefined || amount === null) {
+    return next(new AppError('Please add the amount of the expense', 400));
   }
-
+  
+  if (isNaN(amount)) {
+    return next(new AppError('Amount must be a number', 400));
+  }
+  
+  if (amount <= 0) {
+    return next(new AppError('Amount must be a positive number', 400));
+  }
+  
+  if (!Number.isInteger(Number(amount))) {
+    return next(new AppError('Amount must be an integer', 400));
+  }
+  
   if(!currency){
     return next(new AppError('Please add currency of the expense', 400));
   }
