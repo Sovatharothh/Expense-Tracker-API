@@ -14,6 +14,7 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 - Multer (for file uploads)
 - Other dependencies as listed in `package.json`
 
+
 ## API Endpoints
 
 ### Authentication
@@ -30,8 +31,7 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
   
 - **GET `/api/expenses`**: Get all expenses.
   
-- **GET `/api/expenses/:id`**:
-  - Description: Get an expense by ID.
+- **GET `/api/expenses/:id`**: Get an expense by ID.
   
 - **PUT `/api/expenses/:id`**: Update an expense by ID.
   
