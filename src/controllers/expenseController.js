@@ -12,44 +12,54 @@ const createExpense = asyncHandler(async (req, res, next) => {
     return next(new AppError('Please add the name of the expense', 400));
   }
 
-  if(!category){
+  if (!description) {
+    return next(new AppError('Please add the description of the expense', 400));
+  }
+
+  if (!category) {
     return next(new AppError('Please add the category of the expense', 400));
   }
 
   if (amount === undefined || amount === null) {
     return next(new AppError('Please add the amount of the expense', 400));
   }
-  
+
   if (isNaN(amount)) {
     return next(new AppError('Amount must be a number', 400));
   }
-  
+
   if (amount <= 0) {
     return next(new AppError('Amount must be a positive number', 400));
   }
-  
-  if (!Number.isInteger(Number(amount))) {
-    return next(new AppError('Amount must be an integer', 400));
-  }
-  
-  if(!currency){
+
+  if (!currency) {
     return next(new AppError('Please add currency of the expense', 400));
   }
 
-  if(!date){
+  if (!date) {
     return next(new AppError('Please add the date of the expense', 400));
   }
 
   const expense = await expenseService.createExpense(userId, name, description, category, amount, currency, receipt_image, date);
-  res.status(201).json(expense);
+  res.status(201).json({
+    status: 201,
+    message: 'Expense created successfully',
+    expense: expense
 });
+
+});
+
 
 // Get all expenses
 const getExpenses = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
 
   const expenses = await expenseService.getExpenses(userId);
-  res.status(200).json(expenses);
+  res.status(200).json({
+    status: 200,
+    message: 'You are now view all the expenses',
+    expenses: expenses
+  });
 });
 
 // Get an expense by ID
@@ -61,7 +71,12 @@ const getExpenseById = asyncHandler(async (req, res, next) => {
   if (!expense) {
     return next(new AppError('Expense not found', 404));
   }
-  res.status(200).json(expense);
+  res.status(200).json({
+    status: 200,
+    message: 'you are now view the detail of expense based on ID',
+    expense: expense
+
+   });
 });
 
 // Update an expense by ID
@@ -79,7 +94,11 @@ const updateExpense = asyncHandler(async (req, res, next) => {
   if (!expense) {
     return next(new AppError('Expense not found', 404));
   }
-  res.status(200).json(expense);
+  res.status(200).json({
+    status: 200,
+    message: 'Expense updated successfully',
+    expense: expense
+  });
 });
 
 // Delete an expense by ID
@@ -91,7 +110,11 @@ const deleteExpense = asyncHandler(async (req, res, next) => {
   if (!expense) {
     return next(new AppError('Expense not found', 404));
   }
-  res.status(200).json({ message: 'Expense deleted successfully' });
+  res.status(200).json({ 
+    status: 200,
+    message: 'Expense deleted successfully' 
+
+  });
 });
 
 module.exports = {
