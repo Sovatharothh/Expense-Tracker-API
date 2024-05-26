@@ -57,7 +57,7 @@ const getExpenses = asyncHandler(async (req, res, next) => {
   const expenses = await expenseService.getExpenses(userId);
   res.status(200).json({
     status: 200,
-    message: 'You are now view all the expenses',
+    message: 'You are now viewing all the expenses',
     expenses: expenses
   });
 });
@@ -73,7 +73,7 @@ const getExpenseById = asyncHandler(async (req, res, next) => {
   }
   res.status(200).json({
     status: 200,
-    message: 'you are now view the detail of expense based on ID',
+    message: 'you are now viewing the detail of expense based on ID',
     expense: expense
 
    });
@@ -86,8 +86,36 @@ const updateExpense = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const receipt_image = req.file ? req.file.path : req.body.receipt_image;
 
-  if (!name || !category || !amount || !currency || !date) {
-    return next(new AppError('Please add all required fields', 400));
+  if (!name) {
+    return next(new AppError('Please add the name of the expense', 400));
+  }
+
+  if (!description) {
+    return next(new AppError('Please add the description of the expense', 400));
+  }
+
+  if (!category) {
+    return next(new AppError('Please add the category of the expense', 400));
+  }
+
+  if (amount === undefined || amount === null) {
+    return next(new AppError('Please add the amount of the expense', 400));
+  }
+
+  if (isNaN(amount)) {
+    return next(new AppError('Amount must be a number', 400));
+  }
+
+  if (amount <= 0) {
+    return next(new AppError('Amount must be a positive number', 400));
+  }
+
+  if (!currency) {
+    return next(new AppError('Please add currency of the expense', 400));
+  }
+
+  if (!date) {
+    return next(new AppError('Please add the date of the expense', 400));
   }
 
   const expense = await expenseService.updateExpense(id, userId, name, description, category, amount, currency, receipt_image, date);

@@ -27,7 +27,7 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-// Endpoint for standalone file upload
+// Endpoint for file upload
 router.post('/file_upload', upload.single('image'), (req, res, next) => {
     if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
