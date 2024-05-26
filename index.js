@@ -8,13 +8,14 @@ const errorHandler = require('./src/middleware/errorHandler');
 const AppError = require('./src/utils/AppError');
 const multer = require('multer');
 
-// Multer configuration for file uploads
-const upload = multer({ dest: 'uploads/' });
-
-
 dotenv.config();
 
 const app = express();
+
+// Multer configuration for file uploads
+const upload = multer({ dest: 'uploads/' });
+
+app.use('/uploads', express.static('uploads'));
 
 app.use(express.json());
 
