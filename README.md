@@ -36,11 +36,9 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 - **GET `/api/expenses/:id`**:
   - Description: Get an expense by ID.
   
-- **PUT `/api/expenses/:id`**:
-  - Description: Update an expense by ID.
+- **PUT `/api/expenses/:id`**: Update an expense by ID.
   
-- **DELETE `/api/expenses/:id`**:
-  - Description: Delete an expense by ID.
+- **DELETE `/api/expenses/:id`**: Delete an expense by ID.
 
 
 ## Quick Start
