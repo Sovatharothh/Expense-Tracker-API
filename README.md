@@ -1,5 +1,7 @@
 # Expense Tracker API 
+
 The Expense Tracker API provides endpoints to manage user expenses. It allows users to create, retrieve, update, and delete expenses, including uploading receipt images.
+
 
 
 ## Technologies Used
@@ -16,22 +18,17 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 
 ### Authentication
 
-- **POST `/api/auth/register`**:
-  - Description: User registration.
+- **POST `/api/auth/register`**: User registration.
   
-- **POST `/api/auth/login`**:
-  - Description: User login.
+- **POST `/api/auth/login`**: User login.
   
-- **POST `/api/auth/reset-password`**:
-  - Description: Reset user password.
+- **POST `/api/auth/reset-password`**: Reset user password.
   
 ### Expenses
 
-- **POST `/api/expenses`**:
-  - Description: Create a new expense.
+- **POST `/api/expenses`**: Create a new expense.
   
-- **GET `/api/expenses`**:
-  - Description: Get all expenses.
+- **GET `/api/expenses`**: Get all expenses.
   
 - **GET `/api/expenses/:id`**:
   - Description: Get an expense by ID.
