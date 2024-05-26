@@ -1,7 +1,6 @@
 ...
-#Expense Tracker API 
+# Expense Tracker API 
 The Expense Tracker API provides endpoints to manage user expenses. It allows users to create, retrieve, update, and delete expenses, including uploading receipt images.
-...
 
 ...
 ## Technologies Used
@@ -13,8 +12,6 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 - Swagger (for API documentation)
 - Multer (for file uploads)
 - Other dependencies as listed in `package.json`
-...
-
 
 ...
 ## API Endpoints
@@ -47,7 +44,6 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 - **DELETE `/api/expenses/:id`**:
   - Description: Delete an expense by ID.
 
-...
 
 ...
 ## Quick Start
@@ -72,7 +68,7 @@ The Expense Tracker API provides endpoints to manage user expenses. It allows us
 4. **Run the API:**
     ```bash
     npm start
-...
+
 
 
 
