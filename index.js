@@ -12,6 +12,10 @@ dotenv.config();
 
 const app = express();
 
+
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
+console.log('JWT_REFRESH_SECRET:', process.env.JWT_REFRESH_SECRET);
+
 // Multer configuration for file uploads
 const upload = multer({ dest: 'uploads/' });
 

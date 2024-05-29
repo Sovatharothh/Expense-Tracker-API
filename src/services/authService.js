@@ -1,16 +1,25 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const AppError = require('../utils/AppError');
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+const generateToken = (id, secret, expiresIn) => {
+  return jwt.sign({ id }, secret, { expiresIn });
+};
+
+const generateAccessToken = (id) => {
+  return generateToken(id, process.env.JWT_SECRET, '15m');
+};
+
+const generateRefreshToken = (id) => {
+  return generateToken(id, process.env.JWT_REFRESH_SECRET, '7d');
 };
 
 const registerUser = async (name, email, password) => {
   const userExists = await User.findOne({ where: { email } });
 
   if (userExists) {
-    throw new Error('User already exists');
+    throw new AppError('User already exists', 400);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,7 +34,8 @@ const registerUser = async (name, email, password) => {
     id: user.id,
     name: user.name,
     email: user.email,
-    token: generateToken(user.id),
+    accessToken: generateAccessToken(user.id),
+    refreshToken: generateRefreshToken(user.id),
   };
 };
 
@@ -37,10 +47,11 @@ const loginUser = async (email, password) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      token: generateToken(user.id),
+      accessToken: generateAccessToken(user.id),
+      refreshToken: generateRefreshToken(user.id),
     };
   } else {
-    throw new Error('Invalid credentials');
+    throw new AppError('Invalid credentials', 401);
   }
 };
 
@@ -48,7 +59,7 @@ const resetPassword = async (email, newPassword) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    throw new Error('User not found');
+    throw new AppError('User not found', 404);
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -58,8 +69,17 @@ const resetPassword = async (email, newPassword) => {
   return { message: 'Password updated successfully' };
 };
 
+const verifyRefreshToken = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+  } catch (err) {
+    throw new AppError('Invalid refresh token', 403);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   resetPassword,
+  verifyRefreshToken,
 };

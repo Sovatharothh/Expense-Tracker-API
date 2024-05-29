@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, resetPasswordController } = require('../controllers/authController');
+const { register, login, resetPasswordController, refreshTokenController } = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -39,7 +39,6 @@ const router = express.Router();
  *       400:
  *         description: Bad request
  */
-
 router.post('/register', register);
 
 /**
@@ -70,7 +69,6 @@ router.post('/register', register);
  *       401:
  *         description: Unauthorized
  */
-
 router.post('/login', login);
 
 /**
@@ -103,7 +101,33 @@ router.post('/login', login);
  *       404:
  *         description: User not found
  */
-
 router.post('/reset-password', resetPasswordController);
+
+/**
+ * @swagger
+ * /api/auth/refresh-token:
+ *   post:
+ *     summary: Refresh JWT token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: New access token generated
+ *       400:
+ *         description: Bad request
+ *       403:
+ *         description: Invalid refresh token
+ */
+router.post('/refresh-token', refreshTokenController);
 
 module.exports = router;
